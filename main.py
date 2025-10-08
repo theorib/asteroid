@@ -11,13 +11,20 @@ def main():
     delta_time = 0
     running = True
 
+    updatables = pygame.sprite.Group()
+    drawables = pygame.sprite.Group()
+
+    Player.containers = (updatables, drawables)  # type: ignore
+
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while running:
         screen.fill("black")
 
-        player.draw(screen)
-        player.update(delta_time)
+        updatables.update(delta_time)
+
+        for drawable in drawables:
+            drawable.draw(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
