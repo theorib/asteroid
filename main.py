@@ -1,5 +1,7 @@
 import pygame
 
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 from constants import REFRESH_RATE, SCREEN_HEIGHT, SCREEN_WIDTH
 from player import Player
 
@@ -11,20 +13,24 @@ def main():
     delta_time = 0
     running = True
 
-    updatables = pygame.sprite.Group()
-    drawables = pygame.sprite.Group()
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
-    Player.containers = (updatables, drawables)  # type: ignore
+    Asteroid.containers = (asteroids, updatable, drawable)  # type: ignore
+    Player.containers = (updatable, drawable)  # type: ignore
+    AsteroidField.containers = (updatable,)  # type: ignore
 
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    AsteroidField()
 
     while running:
         screen.fill("black")
 
-        updatables.update(delta_time)
+        updatable.update(delta_time)
 
-        for drawable in drawables:
-            drawable.draw(screen)
+        for item in drawable:
+            item.draw(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
