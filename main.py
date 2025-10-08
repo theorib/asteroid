@@ -8,7 +8,7 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
-    dt = 0
+    delta_time = 0
     running = True
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -17,7 +17,7 @@ def main():
         screen.fill("black")
 
         player.draw(screen)
-        player.update(dt)
+        player.update(delta_time)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -26,7 +26,7 @@ def main():
         pygame.display.flip()
 
         last_call = clock.tick(REFRESH_RATE)
-        dt = last_call / 1000
+        delta_time = last_call / 1000
     # print("Starting Asteroids!")
     # print(f"Screen width: {SCREEN_WIDTH}")
     # print(f"Screen height: {SCREEN_HEIGHT}")
