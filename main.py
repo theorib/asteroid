@@ -21,13 +21,18 @@ def main():
     Player.containers = (updatable, drawable)  # type: ignore
     AsteroidField.containers = (updatable,)  # type: ignore
 
-    Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     AsteroidField()
 
     while running:
         screen.fill("black")
 
         updatable.update(delta_time)
+
+        for asteroid in asteroids:
+            if asteroid.is_coliding(player):
+                print("Game over!")
+                return
 
         for item in drawable:
             item.draw(screen)
